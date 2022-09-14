@@ -1,0 +1,14 @@
+FROM golang:1.18 as builder
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt update && \
+    apt-get -q -y install \
+                            libjpeg-dev \
+                            libpng-dev \
+                            libtiff-dev \
+                            libgif-dev \
+                            libx11-dev \
+    --no-install-recommends
+
+ENV IMAGEMAGICK_VERSION=6.9.10-11

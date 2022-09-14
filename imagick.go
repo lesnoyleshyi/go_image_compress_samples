@@ -34,21 +34,34 @@ func main() {
 		log.Fatalf("can't read image from blob: %s", err)
 	}
 
-	// Resize the image using the Lanczos filter
-	// The blur factor is a float, where > 1 is blurry, < 1 is sharp
-	//err = mw.ResizeImage(hWidth, hHeight, imagick.FILTER_LANCZOS, 1)
-	//if err != nil {
-	//	log.Fatalf("can't resize image: %s", err)
-	//}
+	err = mw.StripImage()
+	if err != nil {
+		log.Fatalf("can't strip image from all profiles and comments: %s", err)
+	}
 
-	err = mw.SetImageCompressionQuality(75)
+	err = mw.SetImageCompressionQuality(55)
 	if err != nil {
 		log.Fatalf("can't set compression: %s", err)
+	}
+
+	err = mw.BlurImage(0, 0.75)
+	if err != nil {
+		log.Fatalf("can't blur image: %s", err)
+	}
+
+	err = mw.SetImageInterlaceScheme(imagick.INTERLACE_PLANE)
+	if err != nil {
+		log.Fatalf("can't set plane interlace scheme: %s", err)
 	}
 
 	err = mw.SetImageFormat("JPEG")
 	if err != nil {
 		log.Fatalf("can't set image format: %s", err)
+	}
+
+	err = mw.SetColorspace(imagick.COLORSPACE_SCRGB)
+	if err != nil {
+		log.Fatalf("can't set color space: %s", err)
 	}
 
 	compressedImg := mw.GetImageBlob()

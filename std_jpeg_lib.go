@@ -11,7 +11,8 @@ import (
 )
 
 const filePath = `/Users/aleksandr/GolandProjects/test_libimagequant/test_images/IMG_2775.jpg`
-const speed = 10
+
+//const speed = 10
 
 func main() {
 	rawImg, err := os.ReadFile(filePath)
